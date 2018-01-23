@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Meu primeiro JS</title>
+
+        <script>
+            function Render() {
+                var total = document.getElementById("cmptexto").value.length;
+                var conteudo = document.getElementById("cmptexto").value;
+
+                var i = 0;
+                var a = i;
+                var d = 10;
+                var linha = "";
+                var linha2 = "";
+                var strRelat = new Array("R","D","N","M","C","L","S","F","G","P","RR","T","NH","","Q","LH","SS","X","J","B","","","","","","","","ZZ","","");
+				strRelat.push("","","","","","","","CH","","");
+                var tic_resp = new Array(strRelat.length);
+                var vogals = new Array("a","e","i","o","u","ae","ai","ao","au","Ã©","ea","ei","eo","eu","eio","iu","io","ia","ie","Ã³","oa","oe","oi","ou","ua","ue","ui","uai","uei","uao");
+
+                for (i=0; i < total; i++) {
+                    tic_resp[i]     = strRelat[parseInt(conteudo.substr(i,1),10)];
+                    tic_resp[i+d]   = strRelat[parseInt(conteudo.substr(i,1),10)+d];
+					tic_resp[i+d+d] = strRelat[parseInt(conteudo.substr(i,1),10)+d+d];
+					tic_resp[i+d+d+d] = strRelat[parseInt(conteudo.substr(i,1),10)+d+d+d];
+					//alert(conteudo.substr(i,1));
+                   							}
+
+                var total2 = total - 1;
+                for (i = 0; i < total; i++) {
+
+                    linha2 = '<select name="lista1' + i + '">';
+                    linha2 += '<option>' +  tic_resp[i] + '</option>';
+                    linha2 += '<option>' +  tic_resp[i+d] + '</option>';
+					linha2 += '<option>' +  tic_resp[i+d+d] + '</option>';
+					linha2 += '<option>' +  tic_resp[i+d+d+d] + '</option>';
+                    linha2 += '</select>';
+                    document.getElementById('newform').innerHTML += linha2;
+
+
+                    for (a = 0; a < vogals.length; a++) {
+                        if (a == 0) { linha = '<select name="lista' + i + '">';}
+                        linha += '<option>' + vogals[a] + '</option>';
+
+                        if (a == vogals.length) {linha += '</select>';}
+                        }
+
+                    document.getElementById('newform').innerHTML += linha;
+
+                    if (i == total2) {document.getElementById('newform').innerHTML += '<br>' ;}
+                    }
+                }
+		function gerar2(val1,val2) {
+			var i = 0;
+			while (i<9) {i++, document.write("<br>");}
+			document.write("<style>h1 {color: red;  font-family: serif; font-size: 225%;}</style>");
+			document.write("<div=re><h1><p align=\"center\">" + val1 + "</p></h1></div>");
+			while (i<5) {i++, document.write("<br>");}
+			document.write("<style>h2 {color: blue;  font-family: serif; font-size: 290%;}</style>");
+			document.write("<div=re><h2><p align=\"center\">" + val2 + "</p></h2></div>");
+									}
+            function gerar() {
+		   		var origin = "";
+		   		var conteudo = document.getElementById("cmptexto").value;
+		   		var total = document.getElementById("cmptexto").value.length;
+                var translated = "";
+                var named = "";
+		   		var tam = 0;
+		   		var b = 0;
+                var i = 0;
+           		for (i=0;i<total;i++) {
+					origin += conteudo.substr(i,1) ;
+                    named = "lista1";
+                    named += i;
+                    translated += document.getElementsByName(named)[0].value;
+                    named = "lista";
+                    named += i;
+            		translated += document.getElementsByName(named)[0].value;
+					tam = document.getElementsByName(named)[0].value.length;
+
+					for (b = 0; b<tam; b++) {
+						origin += "_";}
+											}
+					gerar2(translated,origin);
+										}
+        </script>
+    </head>
+    <body>
+	<!--h1>TRY</h1-->
+	<br></br>
+
+        <form name="Input">
+        <input type="text" autofocus id="cmptexto" name="qtcampos" value="0572"/>
+        <input type="button" name="btn"  onclick="Render();" value="     digite      "/>
+        <input type="button" name="gera" onclick="gerar();"  value="      gerar       "/>
+	<br></br>
+        </form>
+        <div id="newform"></div>
+    </body>
+</html>
